@@ -1,8 +1,13 @@
 /*
-  Median of Two Circularly Sorted Logs
+  HackerRank Median of Two Circularly Sorted Logs
   Given two rotated sorted arrays, find the median of the merged data in O(log(min(n,m))) time and O(1) extra space.
+  
   Logic: implemented a binary search to find the pivot where the array was rotated, then I used a virtual mapping to virtually sort the array and then virtually merged the two arrays to find the median
-  Tests 10, 11 and 12 do not pass, but it's a 12/15 so the logic is robust for the core problem and its circular nature
+  
+  Output Format
+  Output a single integer: the median timestamp in milliseconds. 
+  Let N = n + m and let M be the sorted merged sequence of all timestamps from A and B. 
+  Return M[(N - 1) / 2] (0-based index), which yields the lower median when N is even and the exact middle element when N is odd.
 */
 
 function findMedianInRotatedSortedArrays(A, B) {
@@ -40,11 +45,10 @@ function findMedianInRotatedSortedArrays(A, B) {
     
     let i = 0;
     let j = 0;
-    let prev, curr = 0;
+    let curr = 0;
     let counter = 0;
-    const mid = Math.floor((A.length + B.length) / 2);
+    const mid = Math.floor((A.length + B.length - 1) / 2);
     while (counter <= mid) {
-        prev = curr;
         const val1 = (i < A.length) ? virtualIndex(A, i, pivot1) : Infinity;
         const val2 = (j < B.length) ? virtualIndex(B, j, pivot2) : Infinity;
         
@@ -58,6 +62,6 @@ function findMedianInRotatedSortedArrays(A, B) {
         counter++;
     }
     
-    return !((A.length + B.length) % 2) ? Math.floor((prev + curr) / 2) : curr;
+    return curr;
     
 }
